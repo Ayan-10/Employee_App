@@ -19,6 +19,9 @@ router.put("/user/edit/:tagtId", authcheak, async (req, res) => {
 // router.get("/post/:tagtId", authcheak, async (req, res) => {
 router.get("/user", authcheak, async (req, res) => {
   try {
+    console.log(
+      "yyfgk "
+  );
     console.log(req.user);
     const post = await User.findOne({ _id: req.user }).select('-password').select('-token');
     res.status(200).send({ code: "success", data: post });

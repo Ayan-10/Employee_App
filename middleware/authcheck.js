@@ -3,6 +3,9 @@ const User=require("../mongoSchema/userSchema")
 
 const authcheak=(req,res,next)=>{
         const token=req.header('token');
+        console.log(
+            "kgjgjk "
+        );
         console.log("kghg ---> "+token);
         if(token==null){
             res.status(300).json({ error: "Unauthorized User"  })
