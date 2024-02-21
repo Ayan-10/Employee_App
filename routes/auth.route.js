@@ -121,7 +121,7 @@ router.get("/verification", async (req, res) => {
         res.status(400).json({ error: "Unauthorized User"  })
     } else {
       // try {
-        jwt.verify(token,process.env.SECRET_KEY, (err, decode)=>{
+        jwt.verify(token, process.env.SECRET_KEY, (err, decode)=>{
 
           if(err){
             res.status(401).json({ error: "Unauthorized User"  })
