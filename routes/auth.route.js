@@ -118,21 +118,25 @@ router.get("/verification", async (req, res) => {
     );
     console.log("kghg ---> "+token);
     if (token==null) {
-        res.status(300).json({ error: "Unauthorized User"  })
+        res.status(400).json({ error: "Unauthorized User"  })
     } else {
-      try {
-        const verifiedtoken=jwt.verify(token,process.env.SECRET_KEY);
-        if(verifiedtoken){
+      // try {
+        jwt.verify(token,process.env.SECRET_KEY, (err, decode)=>{
+
+          if(err){
+            res.status(401).json({ error: "Unauthorized User"  })
+
+          }
+          else{
             res.status(200).json({
               msg: "Token Verfication Successful" 
             });
-        }
-        else{
-            res.status(300).json({ error: "Unauthorized User"  })
-        } 
-      } catch (error) {
-        res.status(300).json({ error: "Unauthorized User"  })
-      }
+          } 
+        });
+        
+      // } catch (error) {
+      //   res.status(300).json({ error: "Unauthorized User"  })
+      // }
       }
 });
 
