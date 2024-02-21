@@ -111,4 +111,25 @@ router.get("/logout", (req, res) => {
 //   res.redirect("/pages/login");
 });
 
+router.post("/verfication", async (req, res) => {
+  const token=req.header('token');
+    console.log(
+        "kgjgjk "
+    );
+    console.log("kghg ---> "+token);
+    if (token==null) {
+        res.status(300).json({ error: "Unauthorized User"  })
+    } else {
+        const verifiedtoken=jwt.verify(token,process.env.SECRET_KEY);
+        if(verifiedtoken){
+            res.status(200).json({
+              msg: "Token Verfication Successful" 
+            });
+        }
+        else{
+            res.status(300).json({ error: "Unauthorized User"  })
+        }
+      }
+});
+
 module.exports = router;
