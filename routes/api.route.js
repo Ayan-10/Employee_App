@@ -1,0 +1,34 @@
+const express = require("express");
+var flash = require("connect-flash");
+const { authcheak } = require("../middleware/authcheck");
+const User = require("../mongoSchema/userSchema");
+const router = express.Router();
+
+router.put("/user/edit/:tagtId", authcheak, async (req, res) => {
+  try {
+    await User.findByIdAndUpdate({ _id: req.params.tagtId }, req.body);
+    req.flash("editmsg", "post updated successfully");
+    res.status(200).send({ msg: "success" });
+  } catch (err) {
+    req.flash("editmsg", "post update failed");
+    res.status(200).send({ msg: err.message });
+  }
+});
+
+
+// router.get("/post/:tagtId", authcheak, async (req, res) => {
+router.get("/user/:tagtId", authcheak, async (req, res) => {
+  try {
+    const post = await User.findOne({ _id: req.params.tagtId }).select('-password').select('-token');
+    res.status(200).send({ code: "success", data: post });
+  } catch (err) {
+    req.flash("editmsg", "post update failed");
+    res.status(200).send({ msg: err.message });
+  }
+});
+
+
+
+
+
+module.exports = router;
