@@ -111,7 +111,7 @@ router.get("/logout", (req, res) => {
 //   res.redirect("/pages/login");
 });
 
-router.post("/verfication", async (req, res) => {
+router.get("/verification", async (req, res) => {
   const token=req.header('token');
     console.log(
         "kgjgjk "
@@ -120,6 +120,7 @@ router.post("/verfication", async (req, res) => {
     if (token==null) {
         res.status(300).json({ error: "Unauthorized User"  })
     } else {
+      try {
         const verifiedtoken=jwt.verify(token,process.env.SECRET_KEY);
         if(verifiedtoken){
             res.status(200).json({
@@ -128,7 +129,10 @@ router.post("/verfication", async (req, res) => {
         }
         else{
             res.status(300).json({ error: "Unauthorized User"  })
-        }
+        } 
+      } catch (error) {
+        res.status(300).json({ error: "Unauthorized User"  })
+      }
       }
 });
 
