@@ -17,9 +17,10 @@ router.put("/user/edit/:tagtId", authcheak, async (req, res) => {
 
 
 // router.get("/post/:tagtId", authcheak, async (req, res) => {
-router.get("/user/:tagtId", authcheak, async (req, res) => {
+router.get("/user", authcheak, async (req, res) => {
   try {
-    const post = await User.findOne({ _id: req.params.tagtId }).select('-password').select('-token');
+    console.log(req.user);
+    const post = await User.findOne({ _id: req.user }).select('-password').select('-token');
     res.status(200).send({ code: "success", data: post });
   } catch (err) {
     req.flash("editmsg", "post update failed");
