@@ -4,9 +4,9 @@ const { authcheak } = require("../middleware/authcheck");
 const User = require("../mongoSchema/userSchema");
 const router = express.Router();
 
-router.put("/user/edit/:tagtId", authcheak, async (req, res) => {
+router.put("/user/edit", authcheak, async (req, res) => {
   try {
-    await User.findByIdAndUpdate({ _id: req.params.tagtId }, req.body);
+    await User.findByIdAndUpdate({ _id: req.user }, req.body);
     req.flash("editmsg", "post updated successfully");
     res.status(200).send({ msg: "success" });
   } catch (err) {
