@@ -35,7 +35,7 @@ app.use(bodyParser.json());
 app.use(cookiParser());
 app.use(
   session({
-    secret: "ayan",
+    secret: "ayan1%^&%&&@%098*^&%^@#^y@%!~%5435416^%765872$#~%#^:>:*(*)(&*%<>??UHGJHfdhdh~~~wkj",
     cookie: { expires: false },
     resave: false,
     saveUninitialized: false,

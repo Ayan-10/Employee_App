@@ -32,6 +32,19 @@ router.get("/user", authcheak, async (req, res) => {
 });
 
 
+router.get("/users", authcheak, async (req, res) => {
+  try {
+    console.log(
+      "yyfgk "
+  );
+    console.log(req.user);
+    const post = await User.find().select('-password').select('-token');
+    res.status(200).send({ code: "success", data: post });
+  } catch (err) {
+    req.flash("editmsg", "post update failed");
+    res.status(200).send({ msg: err.message });
+  }
+});
 
 
 
