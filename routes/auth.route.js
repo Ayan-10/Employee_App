@@ -43,7 +43,7 @@ router.post("/signin", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!!user && bcrypt.compareSync(req.body.password, user.password)) {
-      const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY);
+      const token = jwt.sign({ _id: user._id, _role: user.role }, process.env.SECRET_KEY);
     //   res.cookie("jwtoken", token, { expires: false, httpOnly: true });
       // res.cookie("jwtoken", token, { expires: false, httpOnly: true });
       res.status(200).json({
