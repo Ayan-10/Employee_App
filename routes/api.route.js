@@ -17,7 +17,8 @@ router.put("/user/edit", authcheak(["admin","user"]), async (req, res) => {
 
 router.put("/users/edit", authcheak(["admin"]), async (req, res) => {
   try {
-    await User.findByIdAndUpdate({ _id: req.user }, req.body);
+    const user = await User.findOne({ email: req.body.email });
+    await User.findByIdAndUpdate({ _id: user._id }, req.body);
     req.flash("editmsg", "post updated successfully");
     res.status(200).send({ msg: "success" });
   } catch (err) {
@@ -25,8 +26,6 @@ router.put("/users/edit", authcheak(["admin"]), async (req, res) => {
     res.status(200).send({ msg: err.message });
   }
 });
-
-
 
 // router.get("/post/:tagtId", authcheak, async (req, res) => {
 router.get("/user", authcheak(["admin","user"]), async (req, res) => {

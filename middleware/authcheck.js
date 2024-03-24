@@ -50,6 +50,7 @@ const authcheak = (permissions) => {
         }
     }
 }
+
 const authcheakForsignin=(req,res,next)=>{
     const token=req.cookies.jwtoken;
     if(token!=null){
