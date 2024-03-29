@@ -30,10 +30,10 @@ router.put("/users/edit", authcheak(["admin"]), async (req, res) => {
 // router.get("/post/:tagtId", authcheak, async (req, res) => {
 router.get("/user", authcheak(["admin","user"]), async (req, res) => {
   try {
-    console.log(
-      "yyfgk "
-  );
-    console.log(req.user);
+    // console.log(
+    //   "yyfgk "
+    // );
+    // console.log(req.user);
     const post = await User.findOne({ _id: req.user }).select('-password').select('-token');
     res.status(200).send({ code: "success", data: post });
   } catch (err) {
@@ -45,10 +45,10 @@ router.get("/user", authcheak(["admin","user"]), async (req, res) => {
 
 router.get("/users", authcheak(["admin","user"]), async (req, res) => {
   try {
-    console.log(
-      "yyfgk "
-  );
-    console.log(req.user);
+    // console.log(
+    //   "yyfgk "
+    // );
+    // console.log(req.user);
     const post = await User.find().select('-password').select('-token');
     res.status(200).send({ code: "success", data: post });
   } catch (err) {

@@ -69,36 +69,41 @@ router.post('/forgot-password', async (req, res) => {
 
     try {
         const user = await User.findOne({ email: req.body.email });
-        const password = Math.random()                        // Generate random number, eg: 0.123456
-        .toString(36)           // Convert  to base-36 : "0.4fzyo82mvyr"
-                     .slice(-8)// Cut off last 8 characters : "yo82mvyr"
-        const enPassword = bcrypt.hashSync(
-                     password, 10);
-        
-        user.password = enPassword;
-        await user.save()
-        
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.SENDER_EMAIL,
-                pass: process.env.SENDER_PASSWORD
-            },
-        });
-
-        const mail = {
-            from: process.env.SENDER_EMAIL,
-            to: req.body.email,
-            subject: "Reset Password",
-            text: `Your new password is : ${password}"`
-
+        if(user){
+          const password = Math.random()                        // Generate random number, eg: 0.123456
+          .toString(36)           // Convert  to base-36 : "0.4fzyo82mvyr"
+                       .slice(-8)// Cut off last 8 characters : "yo82mvyr"
+          const enPassword = bcrypt.hashSync(
+                       password, 10);
+          
+          user.password = enPassword;
+          await user.save()
+          
+          let transporter = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                  user: process.env.SENDER_EMAIL,
+                  pass: process.env.SENDER_PASSWORD
+              },
+          });
+  
+          const mail = {
+              from: process.env.SENDER_EMAIL,
+              to: req.body.email,
+              subject: "Reset Password",
+              text: `Your new password is : ${password}"`
+  
+          }
+  
+          transporter.sendMail(mail).then(()=>{
+  
+              return res.status(200).json({message: 'If you have registered, you will recive the updated password on registered mail'})
+          }
+          )
+        } else {
+          return res.status(200).json({message: 'If you have registered, you will recive the updated password on registered mail'})
         }
 
-        transporter.sendMail(mail).then(()=>{
-
-            return res.status(200).json({message: 'Password is updated. Check your registered mail'})
-        }
-            )
     } catch (error) {
         console.error(error)
         res.status(500).json({message: 'Internal Error'})
@@ -113,10 +118,10 @@ router.get("/logout", (req, res) => {
 
 router.get("/verification", async (req, res) => {
   const token=req.header('token');
-    console.log(
-        "kgjgjk "
-    );
-    console.log("kghg ---> "+token);
+    // console.log(
+    //     "kgjgjk "
+    // );
+    // console.log("kghg ---> "+token);
     if (token==null) {
         res.status(400).json({ error: "Unauthorized User"  })
     } else {
